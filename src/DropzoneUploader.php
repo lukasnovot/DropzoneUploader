@@ -245,7 +245,7 @@ class DropzoneUploader extends Nette\Application\UI\Control
 	{
 		if ($event !== null) {
 			foreach ($event as $callback) {
-				$callback(...$args);
+				Nette\Utils\Callback::invokeArgs($callback, $args);
 			}
 		}
 	}
@@ -265,6 +265,7 @@ class DropzoneUploader extends Nette\Application\UI\Control
 
 		$form->onSuccess[] = function (Nette\Application\UI\Form $form, array $values): void {
 			$httpData = $form->getHttpData();
+			$this->presenter->redrawControl('book');
 			$this->uploadDriver->setFolder($values['folder']);
 
 			if ($this->uploadDriver->upload($httpData['file'])) {
@@ -314,8 +315,12 @@ class DropzoneUploader extends Nette\Application\UI\Control
 	 */
 	public function handleUploadedFiles(string $folder = null): void
 	{
-		$this->uploadDriver->setFolder($folder);
-		$this->presenter->payload->uploadedFiles = $this->uploadDriver->getUploadedFiles();
-		$this->presenter->sendPayload();
+
+	}
+
+	public function handleRefreshBook() {
+		$this->presenter->flashMessage('Image was successfully uploaded' , 'success');
+		$this->presenter->redrawControl('book');
+		$this->presenter->redrawControl('flashes');
 	}
 }

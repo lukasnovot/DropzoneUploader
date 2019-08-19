@@ -89,6 +89,11 @@ if (window.Dropzone === undefined) {
 
 					a.href = link + '&' + $.param(params);
 					a.classList = 'text-success font-weight-bold';
+
+					$.nette.ajax({
+					type: 'GET',
+						url: {link refreshBook!},
+					});
 				});
 
 				{* uploadprogress *}
