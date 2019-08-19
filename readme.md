@@ -11,5 +11,5 @@ $ composer require aleswita/dropzoneuploader
 ```
 
 
-## Documentations
+## Documentationsss
 Documentation you can find in [Wiki](https://github.com/aleswita/DropzoneUploader/wiki).
