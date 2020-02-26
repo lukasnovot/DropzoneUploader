@@ -78,6 +78,9 @@ if (window.Dropzone === undefined) {
 
 				{* success *}
 				this.on('success', function(file, response) {
+
+
+
 					file.previewElement.classList.add('table-success');
 
 					var a = file.previewElement.querySelector('[data-dz-name]');
@@ -86,6 +89,8 @@ if (window.Dropzone === undefined) {
 						{$fileParam}: file.name,
 						{$folderParam}: folder,
 					};
+
+
 
 					a.href = link + '&' + $.param(params);
 					a.classList = 'text-success font-weight-bold';
@@ -109,6 +114,7 @@ if (window.Dropzone === undefined) {
 
 				{* addedfile *}
 				this.on('addedfile', function(file) {
+$('.spinner').fadeIn();
 					var removeLink = file.previewElement.querySelector('[data-dz-remove]');
 					var col = Dropzone.createElement('<div>');
 
