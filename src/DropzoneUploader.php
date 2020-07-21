@@ -319,7 +319,6 @@ class DropzoneUploader extends Nette\Application\UI\Control
 	}
 
 	public function handleRefreshBook() {
-		$this->presenter->flashMessage('Image was successfully uploaded' , 'success');
 		$this->presenter->redrawControl('book');
 		$this->presenter->redrawControl('images_array');
 		$this->presenter->redrawControl('flashes');
