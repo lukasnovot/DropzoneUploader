@@ -74,6 +74,8 @@ if (window.Dropzone === undefined) {
 					progressElement.classList.add('bg-danger');
 					progressElement.style.width = '100%';
 					a.classList = 'text-danger font-weight-bold';
+					$('.spinner').hide();
+					alert('Max file size is 10MB');
 				});
 
 				{* success *}
