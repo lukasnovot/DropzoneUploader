@@ -11,6 +11,7 @@ namespace AlesWita\DropzoneUploader\UploadDriver;
 
 use AlesWita;
 use Nette;
+use Nette\Utils\Image;
 
 
 /**
@@ -72,6 +73,39 @@ class Move extends UploadDriver
 			try {
 				$dest = $this->folder === null ? $this->settings['dir'] . '/' . $file->getName() : $this->settings['dir'] . '/' . $this->folder . '/' . $file->getName();
 				$file->move($dest);
+
+				$exif=exif_read_data($dest);
+
+				if(isset($exif['Orientation'])) {
+					$orientation = $exif['Orientation'];
+
+					$insertRotation = 0;
+
+					switch ($orientation) {
+						case 3:
+							$insertRotation -= 180;
+							break;
+
+						case 6:
+							$insertRotation += 90;
+							break;
+
+						case 8:
+							$insertRotation -= 90;
+							break;
+					}
+
+					if ($insertRotation) {
+						$image = Image::fromFile($dest);
+
+						$transparentColor = $image->colorallocatealpha(255, 255, 255, 0);
+						$image->rotate(-$insertRotation, $transparentColor);
+						$image->save($dest);
+					}
+				}
+
+
+
 				return true;
 			} catch (Nette\InvalidStateException $e) {
 			}
